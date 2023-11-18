@@ -94,33 +94,82 @@ context.fillRect(x, y, snakeSizeX, snakeSizeY)
 
 // Функция для перемещения змейки в зависимости от нажатых клавиш
 function moveSnake(event) {
+    event.preventDefault();
     if (event.code == "KeyS") {
+        console.log(10)
         ySpeed = 10
         xSpeed = 0
+
     }
     else if (event.code == "KeyD") {
+        console.log(10)
         xSpeed = 10
         ySpeed = 0
+
     }
     else if (event.code == "KeyA") {
+        console.log(10)
         xSpeed = -10
         ySpeed = 0
     }
     else if (event.code == "KeyW") {
+        console.log(10)
         ySpeed = -10
         xSpeed = 0
+    } else if (event.code == "ArrowDown") {
+        console.log(10)
+        ySpeed = 10
+        xSpeed = 0
+    } else if (event.code == "ArrowUp") {
+        console.log(10)
+        ySpeed = -10
+        xSpeed = 0
+    } else if (event.code == "ArrowLeft") {
+        console.log(10)
+        ySpeed = 0
+        xSpeed = -10
+    } else if (event.code == "ArrowRight") {
+        console.log(10)
+        ySpeed = 0
+        xSpeed = 10
     }
 }
 
 
 function startGame() {
-    gameInterval = setInterval(move, 30)
+    gameInterval = setInterval(move, 40)
 
 }
 
 
 
+document.addEventListener('touchmove', function (event) {
+    // Отменяем стандартное поведение браузера (чтобы страница не скроллилась)
+    event.preventDefault();
 
+    // Получаем координаты точки касания
+    let touch = event.touches[0];
+
+    // Если это начало касания, сохраняем начальную точку
+    if (!startY) {
+        startY = touch.clientY;
+        return;
+    }
+
+    // Сохраняем конечную точку касания
+    endY = touch.clientY;
+
+    // Если разница между начальной и конечной точкой касания больше определенного порога (например, 100 пикселей),
+    // считаем это смахиванием вниз и выполняем какое-то действие
+    let deltaY = endY - startY;
+    if (deltaY > 100) {
+        // Здесь выполняйте необходимое действие
+        console.log('Смахивание вниз произошло!');
+
+        // Сбрасываем начальную точку, чтобы можно было обнаружить следующее смахивание
+        startY = null;
+    }
+}, { passive: false }); // Важно указать { passive: false }, чтобы отменить стандартное поведение браузера
 
 document.addEventListener("keydown", moveSnake)
 
