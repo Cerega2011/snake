@@ -1,5 +1,23 @@
 canvas {
     border: 3px black solid;
-    min-width: 251px;
-    min-height: 700px;
+    /* min-width: 200px;
+    min-height: 700px; */
+    width: 40vw;
+    height: 40vw;
+}
+
+/* .block-1,
+.block-2 {
+    width: 250px;
+    height: 250px;
+    border: 10 px solid red;
+    margin: 10px;
+} */
+
+@media screen and (max-width: 420px) {
+    canvas {
+        border: 5px red solid;
+        width: 400px;
+        height: 400px;
+    }
 }
