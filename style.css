@@ -1,9 +1,9 @@
 canvas {
     border: 3px black solid;
-    /* min-width: 200px;
-    min-height: 700px; */
-    width: 40vw;
-    height: 40vw;
+    min-width: 200px;
+    min-height: 700px;
+    width: 70%;
+    height: 70%;
 }
 
 /* .block-1,
@@ -14,10 +14,10 @@ canvas {
     margin: 10px;
 } */
 
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 460px) {
     canvas {
         border: 5px red solid;
-        width: 400px;
-        height: 400px;
+        width: 100%;
+        height: 100vh;
     }
 }
