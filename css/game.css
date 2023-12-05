@@ -1,0 +1,14 @@
+canvas {
+    border: 3px black solid;
+
+    width: 80vw;
+    height: 80vh;
+}
+
+@media screen and (max-width: 460px) {
+    canvas {
+        border: 5px red solid;
+        width: 100vw;
+        height: 90vh;
+    }
+}
