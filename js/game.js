@@ -7,8 +7,8 @@ let x = 0 // Начальная позиция по оси X
 let y = 0 // Начальная позиция по оси Y
 let xSpeed = 10 // Скорость перемещения по оси X
 let ySpeed = 0 // Скорость перемещения по оси y
-let snakeSizeX = 20 // Размер змейки
-let snakeSizeY = 20
+let snakeSizeX = canvas.width * 0.02 // Размер змейки
+let snakeSizeY = snakeSizeX
 let appleSize = 20 // Размер яблока
 let appleX = Math.floor(Math.random() * canvas.width) // Начальная позиция по оси X для яблока
 let appleY = Math.floor(Math.random() * canvas.height) // Начальная позиция по оси y для яблока
@@ -65,15 +65,21 @@ function myTouchMove(event) {
     }
     startX = null
     startY = null
-    // document.querySelector('.out-2').innerHTML = event.touches.length
-    // console.log(event)
+}
 
-    // document.querySelector('.out-2').innerHTML += 'move '
-    // return false
+function checkCollision() {
+    if (x >= canvas.width - snakeSizeX ||
+        x < 0 ||
+        y >= canvas.height - snakeSizeY ||
+        y < 0
+    ) {
+        endGame()
+    }
 }
 
 // Функция для перемещения змейки
 function move() {
+    checkCollision()
     context.clearRect(0, 0, canvas.width, canvas.height) // Очищаем канвас перед каждым обновлением
     tail.unshift({ x: x, y: y })
     // context.fillRect(x, y, snakeSizeX, snakeSizeY) // Рисуем змейку на новой позиции
@@ -85,31 +91,9 @@ function move() {
 
     }
 
+    x = (x + xSpeed + canvas.width) % canvas.width
+    y = (y + ySpeed + canvas.height) % canvas.height
 
-    if (x == 700) {
-        endGame()
-    } else if (x == -10) {
-        endGame()
-    } else if (y == 700) {
-        endGame()
-    } else if (y == - 10) {
-        endGame()
-    }
-
-    if (x >= 1000) {
-        x = 0
-    } else if (x < 0) {
-        x = 950
-    }
-    if (y >= 1000) {
-        y = 0
-    } else if (y < 0) {
-        y = 950
-    }
-
-
-    x = x + xSpeed // Обновляем позицию змейки по оси X
-    y = y + ySpeed // Обновляем позицию змейки по оси Y
     context.fillStyle = "red"
     context.fillRect(appleX, appleY, appleSize, appleSize)
     if (x < appleX + appleSize &&
@@ -119,13 +103,10 @@ function move() {
     ) {
         appleX = Math.floor(Math.random() * canvas.width)
         appleY = Math.floor(Math.random() * canvas.height)
-        // snakeSizeX = snakeSizeX + 30
         XsnakeSize += 50
         context.fillRect(tail, y, snakeSizeX, snakeSizeY)
         score++
         updateScoreText()
-
-
     }
 
 }
@@ -145,11 +126,9 @@ function resetGame() {
     x = 0
     y = 0
     tail = []
-    snakeSizeX = 20
-    snakeSizeY = 20
-    XsnakeSize = 40
-    // tail.unshift({ x: 0, y: 0 })
-    // context.fillRect(x, y, snakeSizeX, snakeSizeY)
+    // snakeSizeX = 20
+    // snakeSizeY = 20
+    // XsnakeSize = 40
     updateScoreText()
 }
 
@@ -195,36 +174,6 @@ function startGame() {
 
 }
 
-
-
-// document.addEventListener('touchmove', function (event) {
-//     // Отменяем стандартное поведение браузера (чтобы страница не скроллилась)
-//     event.preventDefault();
-
-//     // Получаем координаты точки касания
-//     let touch = event.touches[0];
-
-//     // Если это начало касания, сохраняем начальную точку
-//     if (!startY) {
-//         startY = touch.clientY;
-//         return;
-//     }
-
-//     // Сохраняем конечную точку касания
-//     endY = touch.clientY;
-
-//     // Если разница между начальной и конечной точкой касания больше определенного порога (например, 100 пикселей),
-//     // считаем это смахиванием вниз и выполняем какое-то действие
-//     let deltaY = endY - startY;
-//     if (deltaY > 100) {
-//         // Здесь выполняйте необходимое действие
-//         console.log('Смахивание вниз произошло!');
-
-//         // Сбрасываем начальную точку, чтобы можно было обнаружить следующее смахивание
-//         startY = null;
-//     }
-// }, { passive: false }); // Важно указать { passive: false }, чтобы отменить стандартное поведение браузера
-
 document.addEventListener("keydown", moveSnake)
 
 startGameButton.addEventListener("click", function () {
@@ -232,8 +181,3 @@ startGameButton.addEventListener("click", function () {
     startGame()
 })
 
-// context.beginPath()
-// context.arc(100, 100, 50, 0, 2 * Math.PI)
-// context.fillStyle = 'red'
-// context.fill()
-// context.closePath();
