@@ -5,7 +5,7 @@ let scoreText = document.querySelector(".score")
 let score = 0
 let x = 0 // Начальная позиция по оси X
 let y = 0 // Начальная позиция по оси Y
-let xSpeed = 10 // Скорость перемещения по оси X
+let xSpeed = 7 // Скорость перемещения по оси X
 let ySpeed = 0 // Скорость перемещения по оси y
 let snakeSizeX = canvas.width * 0.02 // Размер змейки
 let snakeSizeY = snakeSizeX
@@ -47,20 +47,20 @@ function myTouchMove(event) {
     if (Math.abs(moveX) > Math.abs(moveY)) {
         // Движение по горизонтали
         if (moveX > 0) {
-            xSpeed = 10
+            xSpeed = 7
             ySpeed = 0
         } else {
-            xSpeed = -10
+            xSpeed = -7
             ySpeed = 0
         }
     } else {
         // Движение по вертикали
         if (moveY > 0) {
             xSpeed = 0
-            ySpeed = 10
+            ySpeed = 7
         } else {
             xSpeed = 0
-            ySpeed = -10
+            ySpeed = -7
         }
     }
     startX = null
@@ -121,7 +121,7 @@ function endGame() {
 
 function resetGame() {
     score = 0
-    xSpeed = 10
+    xSpeed = 7
     ySpeed = 0
     x = 0
     y = 0
@@ -159,21 +159,21 @@ context.fillRect(x, y, snakeSizeX, snakeSizeY)
 function moveSnake(event) {
     event.preventDefault();
     if (event.code == "KeyS" || event.code == "ArrowDown") {
-        ySpeed = 10
+        ySpeed = 7
         xSpeed = 0
 
     }
     else if (event.code == "KeyD" || event.code == "ArrowRight") {
-        xSpeed = 10
+        xSpeed = 7
         ySpeed = 0
 
     }
     else if (event.code == "KeyA" || event.code == "ArrowLeft") {
-        xSpeed = -10
+        xSpeed = -7
         ySpeed = 0
     }
     else if (event.code == "KeyW" || event.code == "ArrowUp") {
-        ySpeed = -10
+        ySpeed = -7
         xSpeed = 0
     }
 }
