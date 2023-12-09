@@ -10,8 +10,8 @@ let ySpeed = 0 // Скорость перемещения по оси y
 let snakeSizeX = canvas.width * 0.02 // Размер змейки
 let snakeSizeY = snakeSizeX
 let appleSize = 20 // Размер яблока
-let appleX = Math.floor(Math.random() * canvas.width) // Начальная позиция по оси X для яблока
-let appleY = Math.floor(Math.random() * canvas.height) // Начальная позиция по оси y для яблока
+let appleX // Начальная позиция по оси X для яблока
+let appleY// Начальная позиция по оси y для яблока
 let XsnakeSize = 40
 let tail = [] // Массив для хранения координат хвоста
 let gameInterval
@@ -142,6 +142,16 @@ function updateScoreText() {
     }
 }
 
+function updateCanvasSize() {
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
+    snakeSizeX = canvas.width * 0.02
+    snakeSizeY = canvas.width * 0.02
+    appleSize = canvas.width * 0.02
+    appleX = Math.floor(Math.random() * canvas.width)
+    appleY = Math.floor(Math.random() * canvas.height)
+}
+
 context.fillStyle = "green"
 context.fillRect(x, y, snakeSizeX, snakeSizeY)
 
@@ -170,9 +180,12 @@ function moveSnake(event) {
 
 
 function startGame() {
+    updateCanvasSize()
     gameInterval = setInterval(move, 40)
 
 }
+
+window.addEventListener("resize", updateCanvasSize)
 
 document.addEventListener("keydown", moveSnake)
 

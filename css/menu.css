@@ -4,7 +4,8 @@
 }
 
 body {
-    background-color: grey;
+    background-size: cover;
+    background-image: url(/images/menu-bg.png);
 }
 
 .main {
@@ -18,8 +19,6 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    outline: 3px red solid;
-
     margin: auto;
 }
 
