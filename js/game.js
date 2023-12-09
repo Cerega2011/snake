@@ -101,13 +101,22 @@ function move() {
         y < appleY + appleSize &&
         y + snakeSizeY > appleY
     ) {
-        appleX = Math.floor(Math.random() * canvas.width)
-        appleY = Math.floor(Math.random() * canvas.height)
+        generateRandomApplePosition()
         XsnakeSize += 50
         context.fillRect(tail, y, snakeSizeX, snakeSizeY)
         score++
         updateScoreText()
+
     }
+
+}
+
+function generateRandomApplePosition() {
+    let padding = 10
+    let maxX = canvas.width - appleSize - padding * 2
+    let maxY = canvas.height - appleSize - padding * 2
+    appleY = Math.floor(Math.random() * maxY) + padding
+    appleX = Math.floor(Math.random() * maxX) + padding
 
 }
 
@@ -126,9 +135,7 @@ function resetGame() {
     x = 0
     y = 0
     tail = []
-    // snakeSizeX = 20
-    // snakeSizeY = 20
-    // XsnakeSize = 40
+    XsnakeSize = 40
     updateScoreText()
 }
 
@@ -145,11 +152,13 @@ function updateScoreText() {
 function updateCanvasSize() {
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
-    snakeSizeX = canvas.width * 0.02
-    snakeSizeY = canvas.width * 0.02
-    appleSize = canvas.width * 0.02
+    snakeSizeX = canvas.width * 0.06
+    snakeSizeY = canvas.width * 0.06
+    appleSize = canvas.width * 0.06
     appleX = Math.floor(Math.random() * canvas.width)
     appleY = Math.floor(Math.random() * canvas.height)
+    generateRandomApplePosition()
+
 }
 
 context.fillStyle = "green"
@@ -181,8 +190,9 @@ function moveSnake(event) {
 
 function startGame() {
     updateCanvasSize()
-    gameInterval = setInterval(move, 40)
+    generateRandomApplePosition()
 
+    gameInterval = setInterval(move, 40)
 }
 
 window.addEventListener("resize", updateCanvasSize)
