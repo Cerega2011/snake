@@ -1,0 +1,1 @@
+document.addEventListener("DOMContentLoaded",(function(){document.querySelector(".btn-game").addEventListener("click",(function(){window.location.href="../game.html"}))}));
