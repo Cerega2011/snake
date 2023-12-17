@@ -1,0 +1,1 @@
+document.addEventListener("DOMContentLoaded",(function(){document.querySelector(".menu-Button").addEventListener("click",(function(){setTimeout((function(){window.location.href="../index.html"}),350)}))}));

@@ -7,6 +7,7 @@ module.exports = {
     entry: {
         menu: "./js/menu.js",
         game: "./js/game.js",
+        settings: './js/settings.js'
     },
     output: {
         filename: "[name].bundle.js",
@@ -15,7 +16,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.css$/,
+                test: /.css$/,
                 use: ["style-loader", "css-loader"],
             },
         ],
@@ -31,10 +32,16 @@ module.exports = {
             filename: "game.html",
             chunks: ["game"],
         }),
+        new HtmlWebpackPlugin({
+            template: "./settings.html",
+            filename: "settings.html",
+            chunks: ["settings"],
+        }),
         new CopyWebpackPlugin({
             patterns: [
                 { from: "css", to: "css" },
                 { from: "images", to: "images" },
+                { from: "sounds", to: "sounds" },
             ],
         }),
     ],
