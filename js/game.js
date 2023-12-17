@@ -5,7 +5,8 @@ let scoreText = document.querySelector(".score")
 let score = 0
 let x = 0 // Начальная позиция по оси X
 let y = 0 // Начальная позиция по оси Y
-let xSpeed = 7 // Скорость перемещения по оси X
+let baseSpeed = 7
+let xSpeed = baseSpeed // Скорость перемещения по оси X
 let ySpeed = 0 // Скорость перемещения по оси y
 let snakeSizeX = canvas.width * 0.02 // Размер змейки
 let snakeSizeY = snakeSizeX
@@ -16,12 +17,26 @@ let XsnakeSize = 40
 let tail = [] // Массив для хранения координат хвоста
 let gameInterval
 let game = document.querySelector('.block-1')
+let bonusMusic = new Audio("../sounds/bonus.mp3")
+let gameOverMusic = new Audio("../sounds/game-over.mp3")
+let menuButtonMusic = new Audio("../sounds/menu-button.mp3")
+let phoneMusic = new Audio("../sounds/phone.mp3")
+
+phoneMusic.loop = true
+
+phoneMusic.play()
+
 game.addEventListener('touchmove', myTouchMove); // слышатель на тачмув
 game.addEventListener('touchstart', myTouchStart)
 
 // Начальные координаты косания
 let startX = null
 let startY = null
+
+function upateSpeed() {
+    xSpeed = baseSpeed * (canvas.width / 800)
+    ySpeed = baseSpeed * (canvas.height / 600)
+}
 
 // Функция для обработки начала касания
 function myTouchStart(event) {
@@ -105,6 +120,7 @@ function move() {
         XsnakeSize += 50
         context.fillRect(tail, y, snakeSizeX, snakeSizeY)
         score++
+        bonusMusic.play()
         updateScoreText()
 
     }
@@ -117,20 +133,22 @@ function generateRandomApplePosition() {
     let maxY = canvas.height - appleSize - padding * 2
     appleY = Math.floor(Math.random() * maxY) + padding
     appleX = Math.floor(Math.random() * maxX) + padding
-
 }
 
 
 
 function endGame() {
+    gameOverMusic.play()
     clearInterval(gameInterval)
-    alert("Вы умерли, ваш счёт  " + score)
+    alert("Вы умерли, ваш счёт " + score)
     resetGame()
+
 }
 
 function resetGame() {
     score = 0
-    xSpeed = 7
+    baseSpeed = 7
+    xSpeed = baseSpeed
     ySpeed = 0
     x = 0
     y = 0
@@ -152,17 +170,17 @@ function updateScoreText() {
 function updateCanvasSize() {
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
-    snakeSizeX = canvas.width * 0.06
-    snakeSizeY = canvas.width * 0.06
-    appleSize = canvas.width * 0.06
+    snakeSizeX = canvas.width * 0.02
+    snakeSizeY = canvas.width * 0.02
+    appleSize = canvas.width * 0.03
     appleX = Math.floor(Math.random() * canvas.width)
     appleY = Math.floor(Math.random() * canvas.height)
+    upateSpeed()
     generateRandomApplePosition()
-
 }
 
 context.fillStyle = "green"
-context.fillRect(x, y, snakeSizeX, snakeSizeY)
+// context.fillRect(x, y, snakeSizeX, snakeSizeY)
 
 // Функция для перемещения змейки в зависимости от нажатых клавиш
 function moveSnake(event) {
@@ -191,16 +209,32 @@ function moveSnake(event) {
 function startGame() {
     updateCanvasSize()
     generateRandomApplePosition()
-
     gameInterval = setInterval(move, 40)
+    upateSpeed()
 }
 
-window.addEventListener("resize", updateCanvasSize)
+window.addEventListener("resize", function () {
+    updateCanvasSize()
+    generateRandomApplePosition()
+    upateSpeed()
+    gameInterval = setInterval(move, 40)
+})
 
 document.addEventListener("keydown", moveSnake)
 
 startGameButton.addEventListener("click", function () {
     resetGame()
     startGame()
+    menuButtonMusic.play()
 })
 
+document.addEventListener("DOMContentLoaded", function () {
+    let menuButton = document.querySelector('.menu-button')
+    menuButton.addEventListener('click', function () {
+        menuButtonMusic.play()
+        setTimeout(function () {
+            window.location.href = "../index.html"
+        }, 350)
+
+    })
+})
