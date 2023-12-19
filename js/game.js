@@ -1,3 +1,4 @@
+
 let canvas = document.querySelector("canvas")
 let context = canvas.getContext("2d")
 let startGameButton = document.querySelector(".start")
@@ -21,6 +22,7 @@ let bonusMusic = new Audio("../sounds/bonus.mp3")
 let gameOverMusic = new Audio("../sounds/game-over.mp3")
 let menuButtonMusic = new Audio("../sounds/menu-button.mp3")
 let phoneMusic = new Audio("../sounds/phone.mp3")
+let gameRuning = false
 
 phoneMusic.loop = true
 
@@ -146,6 +148,7 @@ function endGame() {
 }
 
 function resetGame() {
+    gameRuning = false
     score = 0
     baseSpeed = 7
     xSpeed = baseSpeed
@@ -180,7 +183,6 @@ function updateCanvasSize() {
 }
 
 context.fillStyle = "green"
-// context.fillRect(x, y, snakeSizeX, snakeSizeY)
 
 // Функция для перемещения змейки в зависимости от нажатых клавиш
 function moveSnake(event) {
@@ -207,6 +209,11 @@ function moveSnake(event) {
 
 
 function startGame() {
+    if (gameRuning) {
+        alert("Игра уже запущена")
+        return
+    }
+    gameRuning = true
     updateCanvasSize()
     generateRandomApplePosition()
     gameInterval = setInterval(move, 40)
@@ -223,7 +230,7 @@ window.addEventListener("resize", function () {
 document.addEventListener("keydown", moveSnake)
 
 startGameButton.addEventListener("click", function () {
-    resetGame()
+    // resetGame()
     startGame()
     menuButtonMusic.play()
 })
